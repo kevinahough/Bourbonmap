@@ -1,0 +1,110 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Map 673 Lesson 07 Template</title>
+
+  <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background: whitesmoke;
+      font-family: Montserrat, sans-serif;
+    }
+    h1, h2 {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+    font-size: 2em;
+    font-weight: 100;
+    color: #005DAA;
+}
+h2 {
+    top: 40px;
+    font-size: 1.2em;
+}
+.country {
+    stroke: #fff;
+    fill:#00040c;
+}
+
+.hover {
+    fill: yellow;
+    stroke:#010b1c
+}
+#map {
+ width: 1250px;
+ height: 850px;
+ margin: 10px auto;
+ border: 1px solid #d3d3d3;
+}
+.World {
+  fill:#5e6063
+}
+
+  </style>
+</head>
+
+<body>
+  <h1>Bourbon Imports by Country</h1>
+   <h2></h2>
+    <div id="map"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script src="Bourbon_exports.geojson"></script>
+  <script src="//d3js.org/d3.v4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+  <script>
+    // custom JS goes here
+    var width = 1200, height = 1200;
+    var svg = d3.select("#map") // select the document's body
+      .append("svg") // create and append a new svg element to it
+      .attr("width", width) // give the svg width
+      .attr("height", height); // give the svg height
+      var projection =  d3.geoMercator()
+        .scale(width / 2 / Math.PI)
+        .scale(175)
+        .translate([width / 2, height / 2])
+
+    var geoPath = d3.geo.path() //  create a new geo path generator
+      .projection(projection); // assign the project we just created to it
+
+      // queue()
+      //  .defer(d3.json, "Bourbon_exports.json")
+      //  .defer(d3.json, "World_Countries.json")
+      //  .await(makeMap);
+      //  function makeMap(error, exports, World) {
+      //
+      //      svg.append("g")
+      //          .selectAll("path")
+      //          .data(World.features)
+      //          .enter()
+      //          .append("path")
+      //          .attr("d", geoPath)
+      //          .attr("class", "World");
+
+
+    svg.append("g") // create and append a new SVG 'g' element to the svg
+      .selectAll("path") // selectAll the path features that haven't been created yet
+      .data(exports.features) // bind the GeoJSON features data to them
+      .enter() // prepare to
+      .append("path") // append the newly create path elements to the 'g'
+      .attr("d", geoPath) // define the screen coordinates of the new path(s)
+      .attr("class", "country") // give each a class name of 'county'
+      .on("mouseover", function(d){
+        d3.select("h2").text(d.properties.NAME );
+        d3.select(this).attr("class","country hover");
+    })
+    .on("mouseout", function(d){
+        d3.select("h2").text("");
+        d3.select(this).attr("class", "country");
+
+
+
+
+
+    });
+  </script>
+</body>
+
+</html>
