@@ -60,8 +60,8 @@
   <h2></h2>
   <div id="map"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-  <script src="Bourbon_exports.geojson"></script>
-  <script src="World_Countries.geojson"></script>
+  <!-- <script src="Bourbon_exports.geojson"></script>
+  <script src="World_Countries.geojson"></script> -->
   <script src="//d3js.org/d3.v4.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
   <script>
@@ -80,39 +80,39 @@
     var geoPath = d3.geo.path() //  create a new geo path generator
       .projection(projection); // assign the project we just created to it
 
-    // queue()
-    //  .defer(d3.json, "Bourbon_exports.json")
-    //  .defer(d3.json, "World_Countries.json")
-    //  .await(makeMap);
-    //
-    //  function makeMap(error, exports, World_Countries) {
-    //
-    //      svg.append("g")
-    //          .selectAll("path")
-    //          .data(World_Countries.features)
-    //          .enter()
-    //          .append("path")
-    //          .attr("d", geoPath)
-    //          .attr("class", "World_Countries");
+    queue()
+     .defer(d3.json, "Bourbon_exports.json")
+     .defer(d3.json, "World_Countries.json")
+     .await(makeMap);
+    
+     function makeMap(error, exports, World_Countries) {
+    
+         svg.append("g")
+             .selectAll("path")
+             .data(World_Countries.features)
+             .enter()
+             .append("path")
+             .attr("d", geoPath)
+             .attr("class", "World_Countries");
+
+     }
+    // svg.append("g") // create and append a new SVG 'g' element to the svg
+    //   .selectAll("path") // selectAll the path features that haven't been created yet
+    //   .data(exports.features) // bind the GeoJSON features data to them
+    //   .enter() // prepare to
+    //   .append("path") // append the newly create path elements to the 'g'
+    //   .attr("d", geoPath) // define the screen coordinates of the new path(s)
+    //   .attr("class", "country") // give each a class name of 'county'
 
 
-    svg.append("g") // create and append a new SVG 'g' element to the svg
-      .selectAll("path") // selectAll the path features that haven't been created yet
-      .data(exports.features) // bind the GeoJSON features data to them
-      .enter() // prepare to
-      .append("path") // append the newly create path elements to the 'g'
-      .attr("d", geoPath) // define the screen coordinates of the new path(s)
-      .attr("class", "country") // give each a class name of 'county'
-
-
-      .on("mouseover", function(d) {
-        d3.select("h2").text(d.properties.NAME);
-        d3.select(this).attr("class", "country hover");
-      })
-      .on("mouseout", function(d) {
-        d3.select("h2").text("");
-        d3.select(this).attr("class", "country");
-      });
+    //   .on("mouseover", function(d) {
+    //     d3.select("h2").text(d.properties.NAME);
+    //     d3.select(this).attr("class", "country hover");
+    //   })
+    //   .on("mouseout", function(d) {
+    //     d3.select("h2").text("");
+    //     d3.select(this).attr("class", "country");
+    //   });
   </script>
 </body>
 
