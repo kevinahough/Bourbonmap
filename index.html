@@ -11,6 +11,9 @@
       margin: 0;
       background: #ccd7e8;
       font-family: Impact, Charcoal, sans-serif;
+      /*background-image: url("Barrel.jpg");
+      background-repeat: no-repeat;
+      background-position: bottom 100px;*/
     }
 
     h1,
@@ -22,28 +25,20 @@
       font-weight: 100;
       color: #005DAA;
     }
-h2 {
+
+    h2 {
       top: 40px;
       left: 600px;
       font-size: 4em;
     }
 
-    h3 {
-          top: 10px;
-          left: 600px;
-          font-size: 4em;
-        }
-
-
-
-
-      .country {
+    .country {
       fill: #00040c;
     }
 
     .hover {
       fill: yellow;
-      stroke: #010b1c
+      stroke: #ea0936
     }
 
     #map {
@@ -60,6 +55,7 @@ h2 {
 </head>
 
 <body>
+
   <h1>Bourbon Imports by Country Jan-Dec 2016</h1>
   <h2></h2>
   <div id="map"></div>
@@ -67,7 +63,6 @@ h2 {
   <script src="Bourbon_exports.geojson"></script>
   <script src="World_Countries.geojson"></script>
   <script src="//d3js.org/d3.v4.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
   <script>
     // custom JS goes here
@@ -112,14 +107,12 @@ h2 {
 
       .on("mouseover", function(d) {
         d3.select("h2").text(d.properties.NAME);
-        d3.select("h3").text(d.properties.NAME);
         d3.select(this).attr("class", "country hover");
       })
       .on("mouseout", function(d) {
         d3.select("h2").text("");
         d3.select(this).attr("class", "country");
       });
-
   </script>
 </body>
 
