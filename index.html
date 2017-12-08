@@ -81,26 +81,26 @@
       .projection(projection); // assign the project we just created to it
 
     d3.queue()
-      .defer(d3.json, "Bourbon_exports.json")
-      .defer(d3.json, "World_Countries.json")
+      .defer(d3.json, "Bourbon_exports.geojson")
+      .defer(d3.json, "World_Countries.geojson")
       .await(makeMap);
 
-    function makeMap(error, exports, World_Countries) {
-
+    function makeMap(error, bourbonExports, World_Countries) {
+console.log(World_Countries)
       var countries = svg.append("g")
         .selectAll("path")
         .data(World_Countries.features)
         .enter()
         .append("path")
         .attr("d", geoPath)
-        .attr("class", "country");
+        .attr("class", "country")
 
-        // .on("mouseover", function() {
-        //   d3.select(this).classed("hover", "true");
-        // })
-        // .on("mouseout", function() {
-        //   d3.select(this).classed("hover", "false");
-        // });
+        .on("mouseover", function() {
+          d3.select(this).classed("hover", "true");
+        })
+        .on("mouseout", function() {
+          d3.select(this).classed("hover", "false");
+        });
     }
   </script>
 </body>
