@@ -2,9 +2,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Map 673 Lesson 07 Template</title>
+  <title>Bourbon Map</title>
 
-  <link href="http://fonts.googleapis.com/css?family=Roboto,sans-serif" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <style>
     body {
       padding: 0;
@@ -33,9 +33,11 @@
     }
 
     .country {
-      fill: #00040c;
+      /* fill: #00040c; */
     }
-
+    .kentucky {
+      fill: #001166;
+    }
     .hover {
       fill: yellow;
       stroke: #ea0936
@@ -48,9 +50,6 @@
       border: 5px solid #ea0936;
     }
 
-    .World {
-      fill: #5e6063
-    }
   </style>
 </head>
 
@@ -81,26 +80,54 @@
       .projection(projection); // assign the project we just created to it
 
     d3.queue()
-      .defer(d3.json, "Bourbon_exports.geojson")
       .defer(d3.json, "World_Countries.geojson")
+      .defer(d3.json, "Kentucky.geojson")
       .await(makeMap);
 
-    function makeMap(error, bourbonExports, World_Countries) {
-console.log(World_Countries)
+    function makeMap(error, worldCountries, kentucky) {
+
       var countries = svg.append("g")
         .selectAll("path")
-        .data(World_Countries.features)
+        .data(worldCountries.features)
         .enter()
         .append("path")
         .attr("d", geoPath)
         .attr("class", "country")
-
-        .on("mouseover", function() {
-          d3.select(this).classed("hover", "true");
+        // .on("mouseover", function() {
+        //   d3.select(this).classed("hover", "true");
+        // })
+        // .on("mouseout", function() {
+        //   d3.select(this).classed("hover", "false");
+        // })
+        .attr('fill', function(d) {
+          return getColor(d);
         })
-        .on("mouseout", function() {
-          d3.select(this).classed("hover", "false");
-        });
+
+      var kentucky = svg.append("g")
+        .selectAll("path")
+        .data(kentucky.features)
+        .enter()
+        .append("path")
+        .attr("d", geoPath)
+        .attr("class", "kentucky")
+    }
+
+
+    function getColor(d) {
+
+      console.log(d.properties.SUBREGION);
+
+      // if/else
+      // or a switch
+      // if value is < # return color
+      if(d.properties.SUBREGION < 30) {
+        return '#550000';
+      } else if (d.properties.SUBREGION < 40) {
+        return '#006600';
+      } else {
+        return '#000088';
+      }
+      // this function will return a color
     }
   </script>
 </body>
