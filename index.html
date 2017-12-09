@@ -27,17 +27,21 @@
     }
 
     h2 {
-      top: 40px;
-      left: 600px;
-      font-size: 4em;
+      top: 35px;
+      left: 1000px;
+      font-size: 3em;
     }
 
-    .country {
-      /* fill: #00040c; */
-    }
+
+
     .kentucky {
-      fill: #001166;
+      fill: #ef1515;
     }
+
+    /*.bourbon {
+      fill: #001166;
+    }*/
+
     .hover {
       fill: yellow;
       stroke: #ea0936
@@ -49,13 +53,12 @@
       margin: 10px auto;
       border: 5px solid #ea0936;
     }
-
   </style>
 </head>
 
 <body>
 
-  <h1>Bourbon Imports by Country Jan-Dec 2016</h1>
+  <h1>Kentucky Bourbon World-Wide Jan-Dec 2016</h1>
   <h2></h2>
   <div id="map"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
@@ -80,27 +83,30 @@
       .projection(projection); // assign the project we just created to it
 
     d3.queue()
-      .defer(d3.json, "World_Countries.geojson")
+
       .defer(d3.json, "Kentucky.geojson")
+      .defer(d3.json, "bourbonImport.geojson")
       .await(makeMap);
 
-    function makeMap(error, worldCountries, kentucky) {
+    function makeMap(error, kentucky, bourbon) {
 
       var countries = svg.append("g")
         .selectAll("path")
-        .data(worldCountries.features)
+        .data(bourbon.features)
         .enter()
         .append("path")
         .attr("d", geoPath)
         .attr("class", "country")
-        // .on("mouseover", function() {
-        //   d3.select(this).classed("hover", "true");
-        // })
-        // .on("mouseout", function() {
-        //   d3.select(this).classed("hover", "false");
-        // })
+        .on("mouseover", function(d) {
+          d3.select("h2").text(d.properties.Bottles);
+          d3.select(this).attr("class", "country hover");
+        })
+        .on("mouseout", function(d) {
+          d3.select("h2").text("");
+          d3.select(this).attr("class", "country");
+        })
         .attr('fill', function(d) {
-          return getColor(d);
+          return getColor(d)
         })
 
       var kentucky = svg.append("g")
@@ -110,25 +116,31 @@
         .append("path")
         .attr("d", geoPath)
         .attr("class", "kentucky")
-    }
 
 
     function getColor(d) {
 
-      console.log(d.properties.SUBREGION);
-
       // if/else
-      // or a switch
-      // if value is < # return color
-      if(d.properties.SUBREGION < 30) {
-        return '#550000';
-      } else if (d.properties.SUBREGION < 40) {
-        return '#006600';
-      } else {
-        return '#000088';
+        // or a switch
+        // if value is < # return color
+        if(d.properties.botttes < 397662) {
+          return '#ef1515';
+}
+
+        // if (d.properties.bottles < 397662) {
+        //   return '#e21d1d';
+        // } else if (d.properties.bottles >397662 and < 1593105)
+        //   return '#006600';
+        // } else {
+        //   return '#000088';
+        // }
+        // else {
+        //   return '#000088';
+        // }
+        // this function will return a color
       }
-      // this function will return a color
-    }
+
+  }
   </script>
 </body>
 
