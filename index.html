@@ -27,11 +27,18 @@
     }
 
     h2 {
-      top: 35px;
+      position: absolute;
+      left: 550px;
+      top: 30px;
+      font-size: 2em;
+      font-weight: 400;
+      color: #e08c16;
+    }
+    h3 {
+      top: 50px;
       left: 1000px;
       font-size: 3em;
     }
-
 
 
     .kentucky {
@@ -42,8 +49,13 @@
       fill: #001166;
     }*/
 
+    .boundary {
+      stroke: #fff;
+      stroke-width: .8px;
+    }
+
     .hover {
-      fill: yellow;
+      fill: #e08c16;
       stroke: #ea0936
     }
 
@@ -72,7 +84,8 @@
     var svg = d3.select("#map") // select the document's body
       .append("svg") // create and append a new svg element to it
       .attr("width", width) // give the svg width
-      .attr("height", height); // give the svg height
+      .attr("height", height) // give the svg height
+    .attr("class", "boundary");
 
     var projection = d3.geoMercator()
       .scale(width / 2 / Math.PI)
@@ -98,7 +111,8 @@
         .attr("d", geoPath)
         .attr("class", "country")
         .on("mouseover", function(d) {
-          d3.select("h2").text(d.properties.Bottles);
+          d3.select("h2").text(d.properties.name + ":" + " " + d.properties.Bottles + " Bottles");
+          // d3.select("h3").text(d.properties.Bottles)
           d3.select(this).attr("class", "country hover");
         })
         .on("mouseout", function(d) {
@@ -118,14 +132,14 @@
         .attr("class", "kentucky")
 
 
-    function getColor(d) {
+      function getColor(d) {
 
-      // if/else
+        // if/else
         // or a switch
         // if value is < # return color
-        if(d.properties.botttes < 397662) {
+        if (d.properties.botttes < 397662) {
           return '#ef1515';
-}
+        }
 
         // if (d.properties.bottles < 397662) {
         //   return '#e21d1d';
@@ -140,7 +154,7 @@
         // this function will return a color
       }
 
-  }
+    }
   </script>
 </body>
 
