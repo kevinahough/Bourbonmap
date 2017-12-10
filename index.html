@@ -120,29 +120,34 @@
         .attr("d", geoPath)
         .attr("class", "kentucky");
 
-        function getColor(d) {
+      function getColor(d) {
 
 
         // if/else
         // or a switch
         // if value is < # return color
-        if(d.properties.Bottles < 1) {
+        if (d.properties.Bottles < 1) {
           return '#252525';
-        } else if (d.properties.Bottles < 1593105) {
-          return '#fef0d9';
-
-        }if(d.properties.Bottles < 9730950) {
-            return '#fdcc8a';
-          } else if (d.properties.Bottles < 36316936) {
-            return '#fc8d59';
-        }if(d.properties.Bottles < 54930277) {
-            return '#e34a33';
-          } else if (d.properties.Bottles < 71637764) {
-            return '#b30000';
-        // this function will return a color
-        };
+        } else if (d.properties.Bottles < 397662) {
+          return '#ffffb2';
+        }
+        if (d.properties.Bottles < 1593105) {
+          return '#fed976';
+        } else if (d.properties.Bottles < 9730950) {
+          return '#feb24c';
+        }
+        if (d.properties.Bottles < 36316936) {
+          return '#fd8d3c';
+        } else if (d.properties.Bottles < 54930278) {
+          return '#f03b20';
     }
-  }
+
+        };
+
+
+
+
+      }
   </script>
   <footer>
 
