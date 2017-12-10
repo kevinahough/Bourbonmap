@@ -128,26 +128,30 @@
         // if value is < # return color
         if (d.properties.Bottles < 1) {
           return '#252525';
-        } else if (d.properties.Bottles < 397662) {
-          return '#ffffb2';
+        } else if (d.properties.Bottles < 397663) {
+          return '#ffeda0';
         }
-        if (d.properties.Bottles < 1593105) {
+        if (d.properties.Bottles < 1593106) {
           return '#fed976';
-        } else if (d.properties.Bottles < 9730950) {
+        } else if (d.properties.Bottles < 9730951) {
           return '#feb24c';
         }
-        if (d.properties.Bottles < 36316936) {
+        if (d.properties.Bottles < 36316937) {
           return '#fd8d3c';
         } else if (d.properties.Bottles < 54930278) {
-          return '#f03b20';
+          return '#fc4e2a';
+          if (d.properties.Bottles < 71637765) {
+            return '#e31a1c';
+          } else if (d.properties.Bottles > 7163776) {
+            return '#fc4e2a';
+          }
+        }
+      };
+
+
+
+
     }
-
-        };
-
-
-
-
-      }
   </script>
   <footer>
 
