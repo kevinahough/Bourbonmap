@@ -47,13 +47,13 @@
       stroke-width: .9px;
     }
 
+
     #map {
       width: 1250px;
       height: 900px;
       margin: 10px auto;
       border: 5px solid #ea0936;
     }
-
   </style>
 </head>
 
@@ -74,7 +74,7 @@
       .append("svg") // create and append a new svg element to it
       .attr("width", width) // give the svg width
       .attr("height", height) // give the svg height
-    .attr("class", "boundary");
+      .attr("class", "boundary");
 
     var projection = d3.geoMercator()
       .scale(width / 2 / Math.PI)
@@ -118,48 +118,47 @@
         .enter()
         .append("path")
         .attr("d", geoPath)
-        .attr("class", "kentucky")
+        .attr("class", "kentucky");
 
+        function getColor(d) {
 
-      function getColor(d) {
 
         // if/else
         // or a switch
         // if value is < # return color
-        if (d.properties.botttes < 397662) {
-          return '#ef1515';
-        }
+        if(d.properties.Bottles < 1) {
+          return '#252525';
+        } else if (d.properties.Bottles < 1593105) {
+          return '#fef0d9';
 
-        // if (d.properties.bottles < 397662) {
-        //   return '#e21d1d';
-        // } else if (d.properties.bottles >397662 and < 1593105)
-        //   return '#006600';
-        // } else {
-        //   return '#000088';
-        // }
-        // else {
-        //   return '#000088';
-        // }
+        }if(d.properties.Bottles < 9730950) {
+            return '#fdcc8a';
+          } else if (d.properties.Bottles < 36316936) {
+            return '#fc8d59';
+        }if(d.properties.Bottles < 54930277) {
+            return '#e34a33';
+          } else if (d.properties.Bottles < 71637764) {
+            return '#b30000';
         // this function will return a color
-      }
-
+        };
     }
+  }
   </script>
-  <footer >
+  <footer>
 
-          <ul>
+    <ul>
 
-            <li >Kentucky is the birthplace of Bourbon, crafting 95 percent of the world’s supply. Only the Bluegrass State has the perfect natural mix of climate, conditions and pure limestone water necessary for producing the world’s greatest Bourbon.</li>
+      <li>Kentucky is the birthplace of Bourbon, crafting 95 percent of the world’s supply. Only the Bluegrass State has the perfect natural mix of climate, conditions and pure limestone water necessary for producing the world’s greatest Bourbon.</li>
 
-            <li> Bourbon is an $8.5 billion signature industry in Kentucky, generating 17,500 jobs with an annual payroll of $800 million. Spirits production and consumption pours more than $825 million in federal, state and local tax coffers every year.</li>
+      <li> Bourbon is an $8.5 billion signature industry in Kentucky, generating 17,500 jobs with an annual payroll of $800 million. Spirits production and consumption pours more than $825 million in federal, state and local tax coffers every year.</li>
 
-            <li>Data Source: <a href="http://kybourbon.com/bourbon_culture-2/key_bourbon_facts/">Kentucky Distillers Association</a></li>
+      <li>Data Source: <a href="http://kybourbon.com/bourbon_culture-2/key_bourbon_facts/">Kentucky Distillers Association</a></li>
 
-            <li>Map authored by <a class='link' href='#'>Kevin Hough</a></li>
+      <li>Map authored by <a class='link' href='#'>Kevin Hough</a></li>
 
-            </p>
+      </p>
 
-        </footer>
+  </footer>
 
 </body>
 
