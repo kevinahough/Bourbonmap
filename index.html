@@ -53,6 +53,8 @@
 
     }
 
+    /*//Map info*/
+
     #map {
       width: 1250px;
       height: 900px;
@@ -63,6 +65,7 @@
 </head>
 
 <body>
+  <!-- Map title and header info-->
   <h1>Kentucky Bourbon World-Wide Jan-Dec 2016</h1>
   <h2></h2>
   <div id="map"></div>
@@ -71,32 +74,31 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.7/d3-queue.min.js"></script>
 
   <script>
-    // custom JS goes here
+    // map dementions in px
     var width = 1250,
       height = 1200;
-
+    //create scalable vector graphic with attributes
     var svg = d3.select("#map") // select the document's body
       .append("svg") // create and append a new svg element to it
       .attr("width", width) // give the svg width
       .attr("height", height) // give the svg height
       .attr("class", "boundary");
-
+    //Set projection
     var projection = d3.geoMercator()
       .scale(width / 2 / Math.PI)
       .scale(175)
       .translate([width / 2, height / 2])
-
-    var geoPath = d3.geoPath() //  create a new geo path generator
-      .projection(projection); // assign the project we just created to it
-
+    //  create a new geo path generator // assign the project
+    var geoPath = d3.geoPath()
+      .projection(projection);
+    //use queue to load geojson
     d3.queue()
-
       .defer(d3.json, "Kentucky.geojson")
       .defer(d3.json, "bourbonImport.geojson")
       .await(makeMap);
-
+    //create fuction to load map
     function makeMap(error, kentucky, bourbon) {
-
+      //path and append data for countries
       var countries = svg.append("g")
         .selectAll("path")
         .data(bourbon.features)
@@ -116,7 +118,7 @@
         .attr('fill', function(d) {
           return getColor(d)
         })
-
+      //path and append data for kentucky
       var kentucky = svg.append("g")
         .selectAll("path")
         .data(kentucky.features)
@@ -127,10 +129,8 @@
 
       function getColor(d) {
 
-
         // if/else
-        // or a switch
-        // if value is < # return color
+        // set values is and return color for bottles
         if (d.properties.Bottles < 1) {
           return '#252525';
         } else if (d.properties.Bottles < 397663) {
