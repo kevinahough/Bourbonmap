@@ -18,30 +18,52 @@
     }
     h1{
       font-size: 2em;
-      font-weight: 100;
+      font-weight: normal;
       color: white;
     }
     .kentucky {
       fill: #084594;
     }
     .boundary {
-      stroke: #e08c16;
+      stroke: #ccd7e8;
       stroke-width: .9px;
     }
-
     .hover {
       fill: #e08c16;
       stroke: #ea0936;
       stroke-width: .9px;
     }
-    .img {
-      left: 550px;
-      top: 30px;
-    }
     #map {
       width: 960px;
       height: 550px;
       margin: 10px auto;
+      position: relative;
+    }
+    img {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+    }
+    footer {
+      background: #005DAA;
+      padding: 8px 12px;
+      color: white;
+    }
+    .left {
+      width: 60%;
+      float: left;
+    }
+    .right {
+      width: 40%;
+      float: right;
+    }
+    footer:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    footer a {
+      color: white;
     }
   </style>
 </head>
@@ -51,15 +73,21 @@
     <h1>Kentucky Bourbon World-Wide Jan-Dec 2016</h1>
   </header>
 
-  <div id="map"></div>
-  <footer>
+  <div id="map">
     <img src="Ramp.png">
-    <ul>
-      <li>Kentucky is the birthplace of Bourbon, crafting 95 percent of the world’s supply. Only the Bluegrass State has the perfect natural mix of climate, conditions and pure limestone water necessary for producing the world’s greatest Bourbon.</li>
-      <li> Bourbon is an $8.5 billion signature industry in Kentucky, generating 17,500 jobs with an annual payroll of $800 million. Spirits production and consumption pours more than $825 million in federal, state and local tax coffers every year.</li>
-      <li>Data Source: <a href="http://kybourbon.com/bourbon_culture-2/key_bourbon_facts/">Kentucky Distillers Association</a></li>
-      <li>Map authored by <a class='link' href='#'>Kevin Hough</a></li>
-    </ul>
+  </div>
+  <footer>
+    <div class="left">
+        <p>Kentucky is the birthplace of Bourbon, crafting 95 percent of the world’s supply. Only the Bluegrass State has the perfect natural mix of climate, conditions and pure limestone water necessary for producing the world’s greatest Bourbon.</p>
+        <p>Bourbon is an $8.5 billion signature industry in Kentucky, generating 17,500 jobs with an annual payroll of $800 million. Spirits production and consumption pours more than $825 million in federal, state and local tax coffers every year.</p>    
+    </div>
+    <div class="right">
+        <ul>
+            <li>Data Source: <a href="http://kybourbon.com/bourbon_culture-2/key_bourbon_facts/">Kentucky Distillers Association</a></li>
+            <li>Map authored by <a class='link' href='#'>Kevin Hough</a></li>
+          </ul>
+    </div>
+
   </footer>
   <script src="//d3js.org/d3.v4.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/2.3.2/d3-geo-projection.min.js"></script>
@@ -83,11 +111,6 @@
 
     var geoPath = d3.geoPath()
       .projection(projection);
-
-
-    var center = projection([-30, 20]);
-
-    var graticule = d3.geoGraticule();
     
     //use queue to load geojson
     d3.queue()
