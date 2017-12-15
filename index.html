@@ -8,14 +8,18 @@
   <style>
     body {
       padding: 0;
-      margin: 10;
+      margin: 0;
       background: #ccd7e8;
       font-family: Roboto, sans-serif;
+    }
+    header {
+      background: #005DAA;
+      padding: 8px 12px;
     }
     h1{
       font-size: 2em;
       font-weight: 100;
-      color: #005DAA;
+      color: white;
     }
     .kentucky {
       fill: #084594;
@@ -58,6 +62,7 @@
     </ul>
   </footer>
   <script src="//d3js.org/d3.v4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/2.3.2/d3-geo-projection.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.7/d3-queue.min.js"></script>
 
   <script>
@@ -71,14 +76,19 @@
       .attr("height", height) // give the svg height
       .attr("class", "boundary");
     //Set projection
-    var projection = d3.geoMercator()
-      .scale(width / 2 / Math.PI)
-      .scale(175)
-      .translate([width / 2, height / 2])
-    
-    //  create a new geo path generator // assign the project
+    var projection = d3.geoEckert3()
+      .scale(200)
+      .translate([width/2, height/2])
+      .precision(0.1);
+
     var geoPath = d3.geoPath()
       .projection(projection);
+
+
+    var center = projection([-30, 20]);
+
+    var graticule = d3.geoGraticule();
+    
     //use queue to load geojson
     d3.queue()
       .defer(d3.json, "Kentucky.geojson")
@@ -115,9 +125,9 @@
         .attr("d", geoPath)
         .attr("class", "kentucky");
 
-      function getColor(d) {
+    }
 
-        // if/else
+    function getColor(d) {
         // set values is and return color for bottles
         if (d.properties.Bottles < 1) {
           return '#252525';
@@ -137,8 +147,8 @@
         if (d.properties.Bottles = 71637764) {
           return '#e31a1c';
         }
-      };
     }
+
   </script>
 
 </body>
