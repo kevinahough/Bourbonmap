@@ -8,28 +8,25 @@
   <style>
     body {
       padding: 0;
-      margin: 10;
+      margin: 0;
       background: #ccd7e8;
       font-family: Roboto, sans-serif;
     }
 
-    h1,
-    h2 {
-      position: absolute;
-      left: 450px;
-      top: 20px;
-      font-size: 2em;
-      font-weight: 100;
-      color: #005DAA;
+    header {
+      background: #005DAA;
+      padding: 25px 20px;
     }
 
-    h2 {
-      position: absolute;
-      left: 550px;
-      top: 30px;
+    h1 {
       font-size: 2em;
-      font-weight: 400;
-      color: #e08c16;
+      font-weight: normal;
+      color: white;
+    }
+    h2 {
+      font-size: 2em;
+      font-weight: normal;
+      color: white;
     }
 
     .kentucky {
@@ -37,8 +34,8 @@
     }
 
     .boundary {
-      stroke: #e08c16;
-      stroke-width: .9px;
+      stroke: black;
+      stroke-width: .8px;
     }
 
     .hover {
@@ -47,51 +44,114 @@
       stroke-width: .9px;
     }
 
-    .img {
-      left: 550px;
-      top: 30px;
-
-    }
-
-    /*//Map info*/
-
     #map {
-      width: 1250px;
-      height: 900px;
+      width: 960px;
+      height: 550px;
       margin: 10px auto;
-      border: 5px solid #ea0936;
+      position: relative;
+
+
     }
+
+    img {
+      position: absolute;
+      left: 0px;
+      bottom: 310px;
+
+    }
+
+    footer {
+      background: #005DAA;
+      padding: 25px 12px;
+      color: white;
+
+    }
+
+    .left {
+      width: 40%;
+      float: left;
+
+    }
+
+    .right {
+      width: 40%;
+      float: right;
+
+    }
+
+    footer:after {
+      content: "";
+      display: table;
+      clear: both;
+
+    }
+
+    footer a {
+      color: white;
+    }
+
   </style>
 </head>
 
 <body>
-  <!-- Map title and header info-->
-  <h1>Kentucky Bourbon World-Wide Jan-Dec 2016</h1>
-  <h2></h2>
+  <header>
+    <h1>Kentucky Bourbon World-Wide Jan-Dec 2016</h1>
+
+</header>
+
   <div id="map"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<h2> </h2> 
+<img src="Ramp2.png" style="width:400px;height:350px;">
+
+  </div>
+
+  <footer>
+    <div class="left">
+      <p>Kentucky is the birthplace of Bourbon, crafting 95 percent of the world’s supply. Only the Bluegrass State has the perfect natural mix of climate, conditions and pure limestone water necessary for producing the world’s greatest Bourbon.</p>
+
+
+      <p>Bourbon is an $8.5 billion signature industry in Kentucky, generating 17,500 jobs with an annual payroll of $800 million. Spirits production and consumption pours more than $825 million in federal, state and local tax coffers every year.</p>
+
+    </div>
+
+
+    <div class="right">
+<h2> </h2>
+
+      <ul>
+
+        <li>Data Source: <a href="http://kybourbon.com/bourbon_culture-2/key_bourbon_facts/">Kentucky Distillers Association</a></li>
+        <li>Map authored by <a class='link' href='#'>Kevin Hough</a></li>
+      </ul>
+    </div>
+  </footer>
+
   <script src="//d3js.org/d3.v4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/2.3.2/d3-geo-projection.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.7/d3-queue.min.js"></script>
 
   <script>
     // map dementions in px
-    var width = 1250,
-      height = 1200;
+    var width = 960,
+      height = 650;
     //create scalable vector graphic with attributes
     var svg = d3.select("#map") // select the document's body
-      .append("svg") // create and append a new svg element to it
-      .attr("width", width) // give the svg width
-      .attr("height", height) // give the svg height
-      .attr("class", "boundary");
-    //Set projection
-    var projection = d3.geoMercator()
-      .scale(width / 2 / Math.PI)
-      .scale(175)
-      .translate([width / 2, height / 2])
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("class", "boundary"); // create and append a new svg element to it)
     //  create a new geo path generator // assign the project
+    var projection = d3.geoEckert3()
+      .scale(200)
+      .translate([width / 2, height / 2])
+      .precision(0.1);
+
     var geoPath = d3.geoPath()
       .projection(projection);
     //use queue to load geojson
+    var center = projection([-30, 20]);
+    var graticule = d3.geoGraticule();
+
     d3.queue()
       .defer(d3.json, "Kentucky.geojson")
       .defer(d3.json, "bourbonImport.geojson")
@@ -132,7 +192,7 @@
         // if/else
         // set values is and return color for bottles
         if (d.properties.Bottles < 1) {
-          return '#252525';
+          return '#bdbdbd';
         } else if (d.properties.Bottles < 397663) {
           return '#ffeda0';
         }
@@ -152,21 +212,7 @@
       };
     }
   </script>
-  <footer>
-    <img src="Ramp.png">
-    <ul>
 
-      <li>Kentucky is the birthplace of Bourbon, crafting 95 percent of the world’s supply. Only the Bluegrass State has the perfect natural mix of climate, conditions and pure limestone water necessary for producing the world’s greatest Bourbon.</li>
-
-      <li> Bourbon is an $8.5 billion signature industry in Kentucky, generating 17,500 jobs with an annual payroll of $800 million. Spirits production and consumption pours more than $825 million in federal, state and local tax coffers every year.</li>
-
-      <li>Data Source: <a href="http://kybourbon.com/bourbon_culture-2/key_bourbon_facts/">Kentucky Distillers Association</a></li>
-
-      <li>Map authored by <a class='link' href='#'>Kevin Hough</a></li>
-
-      </p>
-
-  </footer>
 
 </body>
 
